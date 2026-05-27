@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎂 王净心 · 生日快乐 🎂</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a1a2e 100%);
+    font-family: 'Ma Shan Zheng', 'ZCOOL KuaiLe', cursive, sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ---- Confetti Canvas ---- */
+  #confetti {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 10;
+  }
+
+  /* ---- Animated Background ---- */
+  .bg-stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--d) ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  /* ---- Main Content ---- */
+  .main {
+    position: relative; z-index: 5;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 30px 20px 60px;
+    min-height: 100vh;
+  }
+
+  /* ---- XiaoHei Cat on the side ---- */
+  .cat-float {
+    position: fixed; z-index: 6; pointer-events: none;
+    animation: floatCat 6s ease-in-out infinite;
+  }
+  .cat-float.left  { left: 8%; top: 60%; }
+  .cat-float.right { right: 8%; top: 30%; animation-delay: -3s; }
+  .cat-float .cat-emoji { font-size: 70px; display: block; filter: drop-shadow(0 0 12px rgba(74,222,128,0.5)); }
+  @keyframes floatCat {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-25px) rotate(3deg); }
+  }
+
+  /* ---- Spy Family Elements ---- */
+  .peanut {
+    position: fixed; z-index: 6; pointer-events: none;
+    font-size: 40px;
+    animation: peanutFall var(--fall-d) linear infinite;
+    animation-delay: var(--fall-delay);
+  }
+  @keyframes peanutFall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ---- Hero Card ---- */
+  .hero-card {
+    margin-top: 40px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    padding: 50px 60px;
+    text-align: center;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 80px rgba(233,69,96,0.1);
+    animation: cardIn 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes cardIn {
+    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .hero-card .subtitle {
+    font-size: 18px;
+    color: #94a3b8;
+    letter-spacing: 6px;
+    margin-bottom: 6px;
+  }
+  .hero-card h1 {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 58px;
+    background: linear-gradient(135deg, #fbbf24, #f97316, #ef4444, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    text-shadow: none;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%,100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+  }
+
+  .hero-card .name-en {
+    font-size: 16px;
+    color: #64748b;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+  }
+
+  .hero-card .divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, transparent, #e94560, transparent);
+    margin: 0 auto 20px;
+    border-radius: 2px;
+  }
+
+  .hero-card .message {
+    font-size: 22px;
+    color: #e2e8f0;
+    line-height: 2;
+  }
+  .hero-card .message .highlight {
+    color: #fbbf24;
+    font-weight: bold;
+  }
+  .hero-card .message .spy {
+    color: #f472b6;
+  }
+  .hero-card .message .xiaohei {
+    color: #4ade80;
+  }
+
+  /* ---- Icon Row ---- */
+  .icon-row {
+    display: flex; justify-content: center; gap: 30px;
+    margin: 36px 0 10px;
+    flex-wrap: wrap;
+  }
+  .icon-item {
+    text-align: center;
+    animation: popIn 0.6s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .icon-item:nth-child(1) { animation-delay: 0.8s; }
+  .icon-item:nth-child(2) { animation-delay: 1.0s; }
+  .icon-item:nth-child(3) { animation-delay: 1.2s; }
+  .icon-item:nth-child(4) { animation-delay: 1.4s; }
+  @keyframes popIn {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .icon-item .icon {
+    font-size: 52px; display: block; margin-bottom: 6px;
+  }
+  .icon-item .label {
+    color: #94a3b8; font-size: 14px; letter-spacing: 2px;
+  }
+
+  /* ---- Anya Quote ---- */
+  .anya-quote {
+    margin-top: 20px;
+    background: rgba(244,114,182,0.08);
+    border: 1px solid rgba(244,114,182,0.2);
+    border-radius: 16px;
+    padding: 18px 28px;
+    font-size: 18px;
+    color: #f9a8d4;
+    max-width: 500px;
+    position: relative;
+  }
+  .anya-quote::before { content: '"'; font-size: 40px; color: #f472b6; position: absolute; top: -10px; left: 12px; }
+  .anya-quote .by { display: block; text-align: right; color: #be185d; font-size: 14px; margin-top: 6px; }
+
+  /* ---- Graduation Badge ---- */
+  .grad-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 28px;
+    background: rgba(96,165,250,0.1);
+    border: 2px solid rgba(96,165,250,0.3);
+    border-radius: 40px;
+    padding: 12px 28px;
+    font-size: 18px;
+    color: #93c5fd;
+    letter-spacing: 2px;
+  }
+  .grad-badge .cap { font-size: 28px; }
+
+  /* ---- Cake ---- */
+  .cake-section {
+    margin-top: 50px;
+    text-align: center;
+    animation: cardIn 1.2s 0.5s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .cake {
+    font-size: 100px; display: block;
+    animation: bounceCake 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(251,191,36,0.3));
+  }
+  @keyframes bounceCake {
+    0%,100% { transform: translateY(0); }
+    30% { transform: translateY(-15px); }
+    50% { transform: translateY(0); }
+    70% { transform: translateY(-8px); }
+  }
+  .cake-text {
+    font-size: 20px; color: #e2e8f0; margin-top: 10px; letter-spacing: 3px;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    margin-top: 50px;
+    text-align: center;
+    color: #475569;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+  /* ---- Floating Greetings ---- */
+  .float-greet {
+    position: fixed; z-index: 4; pointer-events: none;
+    font-size: 22px; color: rgba(255,255,255,0.7);
+    animation: floatUp 8s ease-in infinite;
+    animation-delay: var(--fd);
+    left: var(--fx);
+    top: 110%;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(var(--fr)); opacity: 0; }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 600px) {
+    .hero-card { padding: 30px 24px; }
+    .hero-card h1 { font-size: 38px; }
+    .cat-float .cat-emoji { font-size: 40px; }
+    .icon-row { gap: 16px; }
+    .icon-item .icon { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="bg-stars" id="stars"></div>
+
+<!-- Floating cats (Luo Xiaohei) -->
+<div class="cat-float left"><span class="cat-emoji">🐈‍⬛</span></div>
+<div class="cat-float right"><span class="cat-emoji">🐱</span></div>
+
+<!-- Confetti -->
+<canvas id="confetti"></canvas>
+
+<!-- Floating greetings -->
+<div id="floatGreets"></div>
+
+<!-- Falling peanuts (Spy x Family) -->
+<div id="peanuts"></div>
+
+<!-- Main -->
+<div class="main">
+
+  <div class="hero-card">
+    <div class="subtitle">🎈 HAPPY BIRTHDAY 🎈</div>
+    <h1>王 净 心</h1>
+    <div class="name-en">Jingxin Wang</div>
+    <div class="divider"></div>
+    <div class="message">
+      愿你的每一天<br>
+      都像<span class="xiaohei">罗小黑</span>一样自由自在 🐾<br>
+      像<span class="spy">安妮亚</span>一样被世界温柔以待 🥜<br>
+      像<span class="highlight">毕业帽</span>飞起那一刻一样<br>
+      充满无限可能 ✨
+    </div>
+
+    <div class="icon-row">
+      <div class="icon-item">
+        <span class="icon">🐈‍⬛</span>
+        <span class="label">罗小黑</span>
+      </div>
+      <div class="icon-item">
+        <span class="icon">🥜</span>
+        <span class="label">间谍过家家</span>
+      </div>
+      <div class="icon-item">
+        <span class="icon">🎓</span>
+        <span class="label">毕业快乐</span>
+      </div>
+      <div class="icon-item">
+        <span class="icon">🎂</span>
+        <span class="label">生日快乐</span>
+      </div>
+    </div>
+
+    <div class="anya-quote">
+      ワクワク！
+      <span class="by">—— 阿尼亚·福杰</span>
+    </div>
+
+    <div class="grad-badge">
+      <span class="cap">🎓</span> 恭喜毕业，前程似锦
+    </div>
+  </div>
+
+  <div class="cake-section">
+    <span class="cake">🎂</span>
+    <div class="cake-text">许个愿吧 ✨</div>
+  </div>
+
+  <div class="footer">
+    王净心 · 生日快乐 · 2026
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // ---- Confetti ----
+  const confettiCanvas = document.getElementById('confetti');
+  const cfCtx = confettiCanvas.getContext('2d');
+  let cfW, cfH;
+  const confettiParticles = [];
+  const cfColors = ['#fbbf24','#f97316','#ef4444','#ec4899','#4ade80','#60a5fa',
+                     '#a78bfa','#f472b6','#34d399','#facc15'];
+
+  function resizeConfetti() {
+    cfW = confettiCanvas.width = window.innerWidth;
+    cfH = confettiCanvas.height = window.innerHeight;
+  }
+  resizeConfetti();
+  window.addEventListener('resize', resizeConfetti);
+
+  function spawnConfetti() {
+    for (let i = 0; i < 3; i++) {
+      confettiParticles.push({
+        x: Math.random() * cfW,
+        y: -20,
+        w: 6 + Math.random() * 8,
+        h: 4 + Math.random() * 6,
+        color: cfColors[Math.floor(Math.random() * cfColors.length)],
+        vx: (Math.random() - 0.5) * 3,
+        vy: 1.5 + Math.random() * 3,
+        rot: Math.random() * 360,
+        rotV: (Math.random() - 0.5) * 10,
+        opacity: 0.9,
+      });
+    }
+  }
+
+  function drawConfetti() {
+    cfCtx.clearRect(0, 0, cfW, cfH);
+    for (let i = confettiParticles.length - 1; i >= 0; i--) {
+      const p = confettiParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rotV;
+      p.vy += 0.02;
+      if (p.y > cfH + 30 || p.x < -30 || p.x > cfW + 30) {
+        confettiParticles.splice(i, 1);
+        continue;
+      }
+      cfCtx.save();
+      cfCtx.translate(p.x, p.y);
+      cfCtx.rotate(p.rot * Math.PI / 180);
+      cfCtx.globalAlpha = p.opacity;
+      cfCtx.fillStyle = p.color;
+      cfCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      cfCtx.restore();
+    }
+    // keep spawning
+    if (confettiParticles.length < 120) spawnConfetti();
+    requestAnimationFrame(drawConfetti);
+  }
+  drawConfetti();
+
+  // ---- Stars ----
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      width: ${1 + Math.random() * 3}px;
+      height: ${1 + Math.random() * 3}px;
+      --d: ${2 + Math.random() * 4}s;
+      --delay: ${Math.random() * 4}s;
+    `;
+    starsContainer.appendChild(star);
+  }
+
+  // ---- Peanuts (Spy x Family) ----
+  const pContainer = document.getElementById('peanuts');
+  function spawnPeanut() {
+    const p = document.createElement('div');
+    p.className = 'peanut';
+    p.textContent = '🥜';
+    p.style.cssText = `
+      left: ${5 + Math.random() * 90}%;
+      --fall-d: ${8 + Math.random() * 12}s;
+      --fall-delay: 0s;
+    `;
+    pContainer.appendChild(p);
+    setTimeout(() => p.remove(), 20000);
+  }
+  setInterval(spawnPeanut, 3000);
+  for (let i = 0; i < 5; i++) setTimeout(spawnPeanut, i * 600);
+
+  // ---- Floating Greetings ----
+  const greetContainer = document.getElementById('floatGreets');
+  const greetings = ['🎉 生日快乐！', '🐈‍⬛ 小黑来啦~', '🥜 花生！', '🎓 毕业快乐！',
+                      '✨ 前程似锦', '🌟 天天开心', '💚 喵呜~', 'ワクワク！'];
+  function spawnGreet() {
+    const g = document.createElement('div');
+    g.className = 'float-greet';
+    g.textContent = greetings[Math.floor(Math.random() * greetings.length)];
+    g.style.cssText = `
+      --fx: ${5 + Math.random() * 90}%;
+      --fd: ${Math.random() * 6}s;
+      --fr: ${(Math.random()-0.5)*30}deg;
+    `;
+    greetContainer.appendChild(g);
+    setTimeout(() => g.remove(), 14000);
+  }
+  setInterval(spawnGreet, 4000);
+  for (let i = 0; i < 4; i++) setTimeout(spawnGreet, i * 1000);
+})();
+</script>
+</body>
+</html>
