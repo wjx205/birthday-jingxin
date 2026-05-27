@@ -3,443 +3,382 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎂 王净心 · 生日快乐 🎂</title>
+<title>王净心 · 生日快乐</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a1a2e 100%);
-    font-family: 'Ma Shan Zheng', 'ZCOOL KuaiLe', cursive, sans-serif;
+    background: #faf8f5;
+    font-family: 'Noto Serif SC', 'Noto Sans SC', serif;
+    color: #3d3a35;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    position: relative;
     overflow-x: hidden;
-    cursor: default;
   }
 
-  /* ---- Confetti Canvas ---- */
-  #confetti {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 10;
+  /* Warm paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(168, 196, 158, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(232, 184, 164, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(250, 248, 245, 1) 0%, rgba(245, 242, 237, 1) 100%);
+    z-index: 0;
   }
 
-  /* ---- Animated Background ---- */
-  .bg-stars {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 0;
+  /* Decorative corner elements */
+  .corner {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.6;
   }
-  .star {
-    position: absolute;
-    background: #fff;
-    border-radius: 50%;
-    animation: twinkle var(--d) ease-in-out infinite;
-    animation-delay: var(--delay);
-  }
-  @keyframes twinkle {
-    0%,100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.5); }
+  .corner-tl { top: 30px; left: 30px; }
+  .corner-br { bottom: 30px; right: 30px; transform: rotate(180deg); }
+  .corner svg { width: 80px; height: 80px; }
+
+  /* Subtle floating particles (small, few, slow) */
+  #particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
   }
 
-  /* ---- Main Content ---- */
-  .main {
-    position: relative; z-index: 5;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 30px 20px 60px;
-    min-height: 100vh;
-  }
-
-  /* ---- XiaoHei Cat on the side ---- */
-  .cat-float {
-    position: fixed; z-index: 6; pointer-events: none;
-    animation: floatCat 6s ease-in-out infinite;
-  }
-  .cat-float.left  { left: 8%; top: 60%; }
-  .cat-float.right { right: 8%; top: 30%; animation-delay: -3s; }
-  .cat-float .cat-emoji { font-size: 70px; display: block; filter: drop-shadow(0 0 12px rgba(74,222,128,0.5)); }
-  @keyframes floatCat {
-    0%,100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-25px) rotate(3deg); }
-  }
-
-  /* ---- Spy Family Elements ---- */
-  .peanut {
-    position: fixed; z-index: 6; pointer-events: none;
-    font-size: 40px;
-    animation: peanutFall var(--fall-d) linear infinite;
-    animation-delay: var(--fall-delay);
-  }
-  @keyframes peanutFall {
-    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-    80% { opacity: 0.8; }
-    100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* ---- Hero Card ---- */
-  .hero-card {
-    margin-top: 40px;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(20px);
-    border: 2px solid rgba(255,255,255,0.12);
-    border-radius: 28px;
-    padding: 50px 60px;
-    text-align: center;
-    max-width: 700px;
+  /* Main card */
+  .card {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 80px rgba(233,69,96,0.1);
-    animation: cardIn 1.2s cubic-bezier(0.16,1,0.3,1);
-  }
-  @keyframes cardIn {
-    0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 56px 48px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 40px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.05);
+    text-align: center;
   }
 
-  .hero-card .subtitle {
-    font-size: 18px;
-    color: #94a3b8;
+  /* Header area */
+  .header-eyebrow {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 13px;
     letter-spacing: 6px;
+    color: #a0a090;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .name {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: #3d3a35;
     margin-bottom: 6px;
+    line-height: 1.2;
   }
-  .hero-card h1 {
-    font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 58px;
-    background: linear-gradient(135deg, #fbbf24, #f97316, #ef4444, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-    text-shadow: none;
-    animation: shimmer 3s ease-in-out infinite;
-  }
-  @keyframes shimmer {
-    0%,100% { filter: brightness(1); }
-    50% { filter: brightness(1.3); }
-  }
-
-  .hero-card .name-en {
-    font-size: 16px;
-    color: #64748b;
+  .name-en {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 14px;
     letter-spacing: 4px;
-    margin-bottom: 18px;
+    color: #b0a89a;
+    margin-bottom: 40px;
+    font-weight: 300;
   }
 
-  .hero-card .divider {
-    width: 80px; height: 3px;
-    background: linear-gradient(90deg, transparent, #e94560, transparent);
-    margin: 0 auto 20px;
-    border-radius: 2px;
+  /* Divider with illustration */
+  .divider-wrap {
+    margin: 0 auto 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
   }
-
-  .hero-card .message {
+  .divider-line {
+    width: 60px;
+    height: 1px;
+    background: #d5cfc5;
+  }
+  .divider-icon {
     font-size: 22px;
-    color: #e2e8f0;
-    line-height: 2;
-  }
-  .hero-card .message .highlight {
-    color: #fbbf24;
-    font-weight: bold;
-  }
-  .hero-card .message .spy {
-    color: #f472b6;
-  }
-  .hero-card .message .xiaohei {
-    color: #4ade80;
+    opacity: 0.7;
   }
 
-  /* ---- Icon Row ---- */
-  .icon-row {
-    display: flex; justify-content: center; gap: 30px;
-    margin: 36px 0 10px;
+  /* Message */
+  .message {
+    font-size: 17px;
+    line-height: 2.2;
+    color: #5c5850;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+  }
+  .message .accent-green  { color: #7a9e6d; font-weight: 600; }
+  .message .accent-pink  { color: #c97d7d; font-weight: 600; }
+  .message .accent-gold  { color: #b8944b; font-weight: 600; }
+
+  /* Three motif cards in a row */
+  .motifs {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 42px 0 32px;
     flex-wrap: wrap;
   }
-  .icon-item {
+  .motif {
+    width: 90px;
+    padding: 20px 8px 14px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.04);
     text-align: center;
-    animation: popIn 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    transition: transform 0.3s;
   }
-  .icon-item:nth-child(1) { animation-delay: 0.8s; }
-  .icon-item:nth-child(2) { animation-delay: 1.0s; }
-  .icon-item:nth-child(3) { animation-delay: 1.2s; }
-  .icon-item:nth-child(4) { animation-delay: 1.4s; }
-  @keyframes popIn {
-    0% { opacity: 0; transform: scale(0); }
-    100% { opacity: 1; transform: scale(1); }
+  .motif:hover { transform: translateY(-4px); }
+  .motif .illustration {
+    width: 50px; height: 50px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
   }
-  .icon-item .icon {
-    font-size: 52px; display: block; margin-bottom: 6px;
-  }
-  .icon-item .label {
-    color: #94a3b8; font-size: 14px; letter-spacing: 2px;
-  }
-
-  /* ---- Anya Quote ---- */
-  .anya-quote {
-    margin-top: 20px;
-    background: rgba(244,114,182,0.08);
-    border: 1px solid rgba(244,114,182,0.2);
-    border-radius: 16px;
-    padding: 18px 28px;
-    font-size: 18px;
-    color: #f9a8d4;
-    max-width: 500px;
-    position: relative;
-  }
-  .anya-quote::before { content: '"'; font-size: 40px; color: #f472b6; position: absolute; top: -10px; left: 12px; }
-  .anya-quote .by { display: block; text-align: right; color: #be185d; font-size: 14px; margin-top: 6px; }
-
-  /* ---- Graduation Badge ---- */
-  .grad-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin-top: 28px;
-    background: rgba(96,165,250,0.1);
-    border: 2px solid rgba(96,165,250,0.3);
-    border-radius: 40px;
-    padding: 12px 28px;
-    font-size: 18px;
-    color: #93c5fd;
-    letter-spacing: 2px;
-  }
-  .grad-badge .cap { font-size: 28px; }
-
-  /* ---- Cake ---- */
-  .cake-section {
-    margin-top: 50px;
-    text-align: center;
-    animation: cardIn 1.2s 0.5s cubic-bezier(0.16,1,0.3,1) both;
-  }
-  .cake {
-    font-size: 100px; display: block;
-    animation: bounceCake 2s ease-in-out infinite;
-    filter: drop-shadow(0 10px 30px rgba(251,191,36,0.3));
-  }
-  @keyframes bounceCake {
-    0%,100% { transform: translateY(0); }
-    30% { transform: translateY(-15px); }
-    50% { transform: translateY(0); }
-    70% { transform: translateY(-8px); }
-  }
-  .cake-text {
-    font-size: 20px; color: #e2e8f0; margin-top: 10px; letter-spacing: 3px;
+  .motif .label {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 11px;
+    color: #a0a090;
+    letter-spacing: 1px;
   }
 
-  /* ---- Footer ---- */
-  .footer {
-    margin-top: 50px;
-    text-align: center;
-    color: #475569;
-    font-size: 14px;
+  /* Anya quote */
+  .quote {
+    display: inline-block;
+    margin: 0 auto 30px;
+    padding: 14px 24px;
+    background: rgba(201, 125, 125, 0.06);
+    border-radius: 12px;
+    font-size: 15px;
+    color: #b07070;
+    letter-spacing: 1px;
+    border: 1px solid rgba(201, 125, 125, 0.1);
+  }
+  .quote .attr {
+    display: block;
+    font-size: 12px;
+    color: #c9a0a0;
+    margin-top: 4px;
     letter-spacing: 2px;
   }
 
-  /* ---- Floating Greetings ---- */
-  .float-greet {
-    position: fixed; z-index: 4; pointer-events: none;
-    font-size: 22px; color: rgba(255,255,255,0.7);
-    animation: floatUp 8s ease-in infinite;
-    animation-delay: var(--fd);
-    left: var(--fx);
-    top: 110%;
+  /* Graduation line */
+  .grad-line {
+    font-size: 16px;
+    color: #8a8578;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
   }
-  @keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-110vh) rotate(var(--fr)); opacity: 0; }
+  .grad-line .cap { font-size: 20px; vertical-align: -2px; margin-right: 2px; }
+
+  /* Bottom */
+  .bottom-note {
+    margin-top: 40px;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 12px;
+    color: #c5bfb2;
+    letter-spacing: 3px;
   }
 
-  /* ---- Responsive ---- */
-  @media (max-width: 600px) {
-    .hero-card { padding: 30px 24px; }
-    .hero-card h1 { font-size: 38px; }
-    .cat-float .cat-emoji { font-size: 40px; }
-    .icon-row { gap: 16px; }
-    .icon-item .icon { font-size: 36px; }
+  /* Small cat and peanut illustration at bottom of card */
+  .card-footer-illus {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 24px;
+    opacity: 0.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    .card { padding: 36px 24px; }
+    .name { font-size: 38px; letter-spacing: 4px; }
+    .message { font-size: 15px; line-height: 2; }
+    .motifs { gap: 12px; }
+    .motif { width: 75px; padding: 14px 4px 10px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Stars background -->
-<div class="bg-stars" id="stars"></div>
+<!-- Corner decorations -->
+<div class="corner corner-tl">
+  <svg viewBox="0 0 80 80" fill="none">
+    <path d="M0 40 Q0 0 40 0" stroke="#c5bfb2" stroke-width="1.2" fill="none"/>
+    <path d="M0 30 Q0 10 20 0" stroke="#c5bfb2" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+</div>
+<div class="corner corner-br">
+  <svg viewBox="0 0 80 80" fill="none">
+    <path d="M0 40 Q0 0 40 0" stroke="#c5bfb2" stroke-width="1.2" fill="none"/>
+    <path d="M0 30 Q0 10 20 0" stroke="#c5bfb2" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </svg>
+</div>
 
-<!-- Floating cats (Luo Xiaohei) -->
-<div class="cat-float left"><span class="cat-emoji">🐈‍⬛</span></div>
-<div class="cat-float right"><span class="cat-emoji">🐱</span></div>
+<!-- Particles canvas -->
+<canvas id="particles"></canvas>
 
-<!-- Confetti -->
-<canvas id="confetti"></canvas>
+<!-- Card -->
+<div class="card">
+  <div class="header-eyebrow">HAPPY  BIRTHDAY</div>
 
-<!-- Floating greetings -->
-<div id="floatGreets"></div>
+  <h1 class="name">王 净 心</h1>
+  <div class="name-en">Jingxin Wang</div>
 
-<!-- Falling peanuts (Spy x Family) -->
-<div id="peanuts"></div>
+  <div class="divider-wrap">
+    <span class="divider-line"></span>
+    <span class="divider-icon">✦</span>
+    <span class="divider-line"></span>
+  </div>
 
-<!-- Main -->
-<div class="main">
+  <p class="message">
+    愿你的每一天<br>
+    都像<span class="accent-green">罗小黑</span>一样自由自在<br>
+    像<span class="accent-pink">安妮亚</span>一样被世界温柔以待<br>
+    像<span class="accent-gold">毕业帽</span>飞起那一刻<br>
+    充满无限可能
+  </p>
 
-  <div class="hero-card">
-    <div class="subtitle">🎈 HAPPY BIRTHDAY 🎈</div>
-    <h1>王 净 心</h1>
-    <div class="name-en">Jingxin Wang</div>
-    <div class="divider"></div>
-    <div class="message">
-      愿你的每一天<br>
-      都像<span class="xiaohei">罗小黑</span>一样自由自在 🐾<br>
-      像<span class="spy">安妮亚</span>一样被世界温柔以待 🥜<br>
-      像<span class="highlight">毕业帽</span>飞起那一刻一样<br>
-      充满无限可能 ✨
+  <div class="motifs">
+    <div class="motif">
+      <div class="illustration">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+          <ellipse cx="20" cy="22" rx="10" ry="9" fill="#4a4a3a"/>
+          <circle cx="20" cy="14" r="8" fill="#4a4a3a"/>
+          <polygon points="20,6 14,14 26,14" fill="#4a4a3a"/>
+          <polygon points="20,10 16,16 24,16" fill="#6b6b52"/>
+          <circle cx="16" cy="13" r="1.5" fill="#a0c080"/>
+          <circle cx="24" cy="13" r="1.5" fill="#a0c080"/>
+          <ellipse cx="20" cy="16" rx="1.5" ry="1" fill="#8a8a70"/>
+          <path d="M20 22 Q16 26 12 24" stroke="#4a4a3a" stroke-width="1.2" fill="none"/>
+          <path d="M20 22 Q24 26 28 24" stroke="#4a4a3a" stroke-width="1.2" fill="none"/>
+          <path d="M14 31 L12 38" stroke="#4a4a3a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M26 31 L28 38" stroke="#4a4a3a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="label">罗小黑</div>
     </div>
 
-    <div class="icon-row">
-      <div class="icon-item">
-        <span class="icon">🐈‍⬛</span>
-        <span class="label">罗小黑</span>
+    <div class="motif">
+      <div class="illustration">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+          <ellipse cx="20" cy="24" rx="6" ry="5" fill="#d4a88c"/>
+          <path d="M14 24 Q14 28 20 30 Q26 28 26 24" fill="#d4a88c"/>
+          <path d="M14 22 Q17 18 20 20 Q23 18 26 22" fill="#d4a88c" stroke="#c49575" stroke-width="0.5"/>
+          <ellipse cx="20" cy="22" rx="8" ry="7" fill="#e8c4a8"/>
+          <circle cx="20" cy="8" r="7" fill="#f0d4c0"/>
+          <circle cx="20" cy="9" r="5" fill="#fce4d4"/>
+          <path d="M14 5 Q12 0 16 0" stroke="#f0d4c0" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M26 5 Q28 0 24 0" stroke="#f0d4c0" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="17" cy="8" r="1.8" fill="#3a6a3a"/>
+          <circle cx="23" cy="8" r="1.8" fill="#3a6a3a"/>
+          <circle cx="17" cy="7.8" r="0.7" fill="#fff"/>
+          <circle cx="23" cy="7.8" r="0.7" fill="#fff"/>
+          <ellipse cx="20" cy="10" rx="1.2" ry="0.8" fill="#c08080"/>
+          <path d="M18 12 Q20 13 22 12" stroke="#c08080" stroke-width="0.6" fill="none"/>
+          <!-- peanut -->
+          <ellipse cx="24" cy="5" rx="2.5" ry="3.5" fill="#c4a060" transform="rotate(20 24 5)"/>
+          <path d="M23 3.5 Q24 2.5 25 3.5" stroke="#a08040" stroke-width="0.5" fill="none"/>
+        </svg>
       </div>
-      <div class="icon-item">
-        <span class="icon">🥜</span>
-        <span class="label">间谍过家家</span>
-      </div>
-      <div class="icon-item">
-        <span class="icon">🎓</span>
-        <span class="label">毕业快乐</span>
-      </div>
-      <div class="icon-item">
-        <span class="icon">🎂</span>
-        <span class="label">生日快乐</span>
-      </div>
+      <div class="label">安妮亚</div>
     </div>
 
-    <div class="anya-quote">
-      ワクワク！
-      <span class="by">—— 阿尼亚·福杰</span>
-    </div>
-
-    <div class="grad-badge">
-      <span class="cap">🎓</span> 恭喜毕业，前程似锦
+    <div class="motif">
+      <div class="illustration">
+        <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+          <path d="M12 18 L28 18 L30 24 L10 24 Z" fill="#3a3a50"/>
+          <rect x="17" y="12" width="6" height="6" rx="1" fill="#3a3a50"/>
+          <rect x="14" y="6" width="12" height="2" rx="1" fill="#3a3a50"/>
+          <path d="M26 6 L34 2" stroke="#3a3a50" stroke-width="2" stroke-linecap="round"/>
+          <!-- tassel -->
+          <path d="M26 6 Q34 6 32 12" stroke="#c4a060" stroke-width="1.5" fill="none"/>
+          <circle cx="32" cy="13" r="1.5" fill="#c4a060"/>
+          <!-- diploma -->
+          <rect x="13" y="26" width="14" height="9" rx="1.5" fill="#faf5e8" stroke="#c5bfb2" stroke-width="0.8"/>
+          <path d="M16 29 L24 29 M16 31 L22 31" stroke="#c5bfb2" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="label">毕业快乐</div>
     </div>
   </div>
 
-  <div class="cake-section">
-    <span class="cake">🎂</span>
-    <div class="cake-text">许个愿吧 ✨</div>
+  <div class="quote">
+    ワクワク！
+    <span class="attr">—— 阿尼亚·福杰</span>
   </div>
 
-  <div class="footer">
-    王净心 · 生日快乐 · 2026
+  <div class="grad-line">
+    <span class="cap">🎓</span> 恭喜毕业，前程似锦
   </div>
 
+  <div class="bottom-note">王净心 · 生日快乐 · 2026</div>
 </div>
 
 <script>
 (function() {
-  // ---- Confetti ----
-  const confettiCanvas = document.getElementById('confetti');
-  const cfCtx = confettiCanvas.getContext('2d');
-  let cfW, cfH;
-  const confettiParticles = [];
-  const cfColors = ['#fbbf24','#f97316','#ef4444','#ec4899','#4ade80','#60a5fa',
-                     '#a78bfa','#f472b6','#34d399','#facc15'];
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  const particles = [];
 
-  function resizeConfetti() {
-    cfW = confettiCanvas.width = window.innerWidth;
-    cfH = confettiCanvas.height = window.innerHeight;
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
   }
-  resizeConfetti();
-  window.addEventListener('resize', resizeConfetti);
+  resize();
+  window.addEventListener('resize', resize);
 
-  function spawnConfetti() {
-    for (let i = 0; i < 3; i++) {
-      confettiParticles.push({
-        x: Math.random() * cfW,
-        y: -20,
-        w: 6 + Math.random() * 8,
-        h: 4 + Math.random() * 6,
-        color: cfColors[Math.floor(Math.random() * cfColors.length)],
-        vx: (Math.random() - 0.5) * 3,
-        vy: 1.5 + Math.random() * 3,
-        rot: Math.random() * 360,
-        rotV: (Math.random() - 0.5) * 10,
-        opacity: 0.9,
-      });
-    }
+  // Create subtle floating particles
+  const colors = ['#c5bfb2', '#b8c4a8', '#d4b8a8', '#c9c0b0', '#b0c0a8'];
+  for (let i = 0; i < 20; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: 1 + Math.random() * 2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -0.2 - Math.random() * 0.4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      opacity: 0.2 + Math.random() * 0.3,
+    });
   }
 
-  function drawConfetti() {
-    cfCtx.clearRect(0, 0, cfW, cfH);
-    for (let i = confettiParticles.length - 1; i >= 0; i--) {
-      const p = confettiParticles[i];
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let p of particles) {
       p.x += p.vx;
       p.y += p.vy;
-      p.rot += p.rotV;
-      p.vy += 0.02;
-      if (p.y > cfH + 30 || p.x < -30 || p.x > cfW + 30) {
-        confettiParticles.splice(i, 1);
-        continue;
-      }
-      cfCtx.save();
-      cfCtx.translate(p.x, p.y);
-      cfCtx.rotate(p.rot * Math.PI / 180);
-      cfCtx.globalAlpha = p.opacity;
-      cfCtx.fillStyle = p.color;
-      cfCtx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-      cfCtx.restore();
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.opacity;
+      ctx.fill();
     }
-    // keep spawning
-    if (confettiParticles.length < 120) spawnConfetti();
-    requestAnimationFrame(drawConfetti);
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
   }
-  drawConfetti();
-
-  // ---- Stars ----
-  const starsContainer = document.getElementById('stars');
-  for (let i = 0; i < 80; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.cssText = `
-      left: ${Math.random() * 100}%;
-      top: ${Math.random() * 100}%;
-      width: ${1 + Math.random() * 3}px;
-      height: ${1 + Math.random() * 3}px;
-      --d: ${2 + Math.random() * 4}s;
-      --delay: ${Math.random() * 4}s;
-    `;
-    starsContainer.appendChild(star);
-  }
-
-  // ---- Peanuts (Spy x Family) ----
-  const pContainer = document.getElementById('peanuts');
-  function spawnPeanut() {
-    const p = document.createElement('div');
-    p.className = 'peanut';
-    p.textContent = '🥜';
-    p.style.cssText = `
-      left: ${5 + Math.random() * 90}%;
-      --fall-d: ${8 + Math.random() * 12}s;
-      --fall-delay: 0s;
-    `;
-    pContainer.appendChild(p);
-    setTimeout(() => p.remove(), 20000);
-  }
-  setInterval(spawnPeanut, 3000);
-  for (let i = 0; i < 5; i++) setTimeout(spawnPeanut, i * 600);
-
-  // ---- Floating Greetings ----
-  const greetContainer = document.getElementById('floatGreets');
-  const greetings = ['🎉 生日快乐！', '🐈‍⬛ 小黑来啦~', '🥜 花生！', '🎓 毕业快乐！',
-                      '✨ 前程似锦', '🌟 天天开心', '💚 喵呜~', 'ワクワク！'];
-  function spawnGreet() {
-    const g = document.createElement('div');
-    g.className = 'float-greet';
-    g.textContent = greetings[Math.floor(Math.random() * greetings.length)];
-    g.style.cssText = `
-      --fx: ${5 + Math.random() * 90}%;
-      --fd: ${Math.random() * 6}s;
-      --fr: ${(Math.random()-0.5)*30}deg;
-    `;
-    greetContainer.appendChild(g);
-    setTimeout(() => g.remove(), 14000);
-  }
-  setInterval(spawnGreet, 4000);
-  for (let i = 0; i < 4; i++) setTimeout(spawnGreet, i * 1000);
+  draw();
 })();
 </script>
 </body>
